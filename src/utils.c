@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/31 13:15:25 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/08/31 13:51:34 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/08/31 15:24:11 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ void	ft_check_malloc(void *ptr)
 {
 	if (!ptr)
 		exit(1);
+}
+
+int	ft_error(char *str)
+{
+	if (str)
+		printf("%s", str);
+	return (EXIT_FAILURE);
 }
