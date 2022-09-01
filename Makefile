@@ -6,7 +6,7 @@
 #    By: pderksen <pderksen@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/08/22 14:33:13 by pderksen      #+#    #+#                  #
-#    Updated: 2022/08/31 15:07:30 by pderksen      ########   odam.nl          #
+#    Updated: 2022/09/01 13:31:07 by pderksen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ endif
 #Source and object files
 SRCS := main.c \
 		utils.c \
-		atoi.c
+		atoi.c \
+		initialize.c
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 
