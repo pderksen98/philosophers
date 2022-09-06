@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/01 16:50:27 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/06 13:13:06 by pieterderks   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 # include <time.h>
 # include <sys/errno.h>
 # include <stdbool.h>
+# include <sys/time.h>
 # include "philosophers.h"
-
-
 
 typedef struct s_rules
 {
@@ -33,11 +32,12 @@ typedef struct s_rules
 	int				time_to_sleep;
 	int				nb_of_meals;
 	int				index;
+	long			time_at_start;
+	pthread_mutex_t	*forks;
+	struct s_philo	*philos;
+	pthread_mutex_t	print_lock;
 	bool			a_philo_died;
 	bool			all_philo_ate;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print_lock;
-	struct s_philo	*philos;
 }	t_rules;
 
 typedef struct s_philo

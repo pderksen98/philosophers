@@ -6,13 +6,13 @@
 #    By: pderksen <pderksen@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/08/22 14:33:13 by pderksen      #+#    #+#                  #
-#    Updated: 2022/09/01 13:31:07 by pderksen      ########   odam.nl          #
+#    Updated: 2022/09/06 13:30:28 by pieterderks   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 # -*- Makefile -*-
 
-NAME := philosophers
+NAME := philo
 CC := gcc
 
 # Colors
@@ -27,9 +27,11 @@ SRC_DIR := src
 VPATH := $(subst $(space),:,$(shell find $(SRC_DIR) -type d))
 
 ifndef DEBUG
+CC := gcc
 CFLAGS := -Wall -Wextra -Werror
 else
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address -g
+CC := clang
+CFLAGS := -Wall -Wextra -Werror -fsanitize=thread -g -DDEBUG=1
 endif
 
 #Source and object files
