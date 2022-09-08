@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/31 13:15:34 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/06 13:34:44 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/06 14:04:25 by pieterderks   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,6 @@ void	print_args(t_rules rules)
 	printf("*****************************************\n\n");
 }
 
-void	timegelul(void)
-{
-	struct timeval	current_time;
-	long			time_at_start;
-
-	
-	gettimeofday(&current_time, NULL);
-	// printf("Time in seconds since 00:00:00, 1 JAN, 1970 = %ld\n", current_time.tv_sec);
-	// printf("Additional micro seconds =					  %d\n", current_time.tv_usec);
-	time_at_start = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	printf("Time in [ms] at start = %ld\n", time_at_start);
-}
-
 int	main(int argc, char **argv)
 {
 	t_rules	rules;
@@ -58,8 +45,9 @@ int	main(int argc, char **argv)
 		return (ft_error("Wrong amount of arguments\n"));
 	if (initialize_all(&rules, argv))
 		return (EXIT_FAILURE);
+	if (start_simulation(&rules))
+		return (EXIT_FAILURE);
 	print_args(rules);
 	print_philosophers(rules);
-	// timegelul();
 	return (EXIT_SUCCESS);
 }

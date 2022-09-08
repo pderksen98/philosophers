@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/06 13:13:06 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/07 13:18:07 by pieterderks   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ typedef struct s_rules
 	long			time_at_start;
 	pthread_mutex_t	*forks;
 	struct s_philo	*philos;
-	pthread_mutex_t	print_lock;
-	bool			a_philo_died;
-	bool			all_philo_ate;
+	// pthread_mutex_t	print_lock;
+	// bool			a_philo_died;
+	// bool			all_philo_ate;
 }	t_rules;
 
 typedef struct s_philo
@@ -46,9 +46,9 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				times_eaten;
-	int				last_meal;
-	bool			finished;
 	t_rules			*rules;
+	// int				last_meal;
+	// bool			finished;
 }	t_philo;
 
 int		main(int argc, char **argv);
@@ -60,4 +60,6 @@ int		initialize_all(t_rules *rules, char **argv);
 int		initialize_rules(t_rules *rules, char **argv);
 int		initialize_philos(t_rules *rules);
 int		check_input(t_rules *rules);
+int		start_simulation(t_rules *rules);
+int		get_start_time(t_rules *rules);
 #endif

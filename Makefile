@@ -6,7 +6,7 @@
 #    By: pderksen <pderksen@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/08/22 14:33:13 by pderksen      #+#    #+#                  #
-#    Updated: 2022/09/06 13:30:28 by pieterderks   ########   odam.nl          #
+#    Updated: 2022/09/06 18:42:45 by pieterderks   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ endif
 SRCS := main.c \
 		utils.c \
 		atoi.c \
-		initialize.c
+		initialize.c \
+		simulation.c
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 
@@ -67,7 +68,6 @@ re : fclean $(NAME)
 .PHONY : all, clean, fclean, re
 
 
-
 #*************EXAMPLE*************#
 #    all: library.c main.c
 #    - $@ = all
@@ -82,5 +82,3 @@ re : fclean $(NAME)
 # COLOUR_GREEN=\033[0;32m
 # COLOUR_RED=\033[0;31m
 # COLOUR_END=\033[0m
-
-

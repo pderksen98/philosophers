@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/01 12:56:53 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/06 13:45:01 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/06 13:55:29 by pieterderks   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	initialize_rules(t_rules *rules, char **argv)
 	}
 	else
 		rules->nb_of_meals = -1;
-	rules->all_philo_ate = false;
-	rules->a_philo_died = false;
 	return (EXIT_SUCCESS);
 }
 
@@ -65,8 +63,6 @@ int	initialize_philos(t_rules *rules)
 		else
 			philo[i].right_fork = i;
 		philo[i].times_eaten = 0;
-		philo[i].last_meal = 0;
-		philo[i].finished = false;
 		philo[i].rules = rules;
 		i++;
 	}
