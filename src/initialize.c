@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/01 12:56:53 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/06 13:55:29 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/08 16:38:06 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int	check_input(t_rules *rules)
 	return (EXIT_SUCCESS);
 }
 
-int	initialize_rules(t_rules *rules, char **argv)
+int	init_rules(t_rules *rules, char **argv)
 {
+	rules->time_at_start = get_current_time();
 	rules->nb_of_philos = ft_atoi(argv[1]);
 	rules->time_to_die = ft_atoi(argv[2]);
 	rules->time_to_eat = ft_atoi(argv[3]);
@@ -45,38 +46,11 @@ int	initialize_rules(t_rules *rules, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-int	initialize_philos(t_rules *rules)
+int	initialize_rules(t_rules *rules, char **argv)
 {
-	int		i;
-	t_philo	*philo;
-
-	philo = malloc(rules->nb_of_philos * sizeof(*philo));
-	if (!philo)
-		return (ft_error("Malloc went wrong\n"));
-	i = 0;
-	while (i < rules->nb_of_philos)
-	{
-		philo[i].id = i + 1;
-		philo[i].left_fork = i + 1;
-		if (philo[i].id == 1 && philo[i].id < rules->nb_of_philos)
-			philo[i].right_fork = rules->nb_of_philos;
-		else
-			philo[i].right_fork = i;
-		philo[i].times_eaten = 0;
-		philo[i].rules = rules;
-		i++;
-	}
-	rules->philos = philo;
-	return (EXIT_SUCCESS);
-}
-
-int	initialize_all(t_rules *rules, char **argv)
-{
-	if (initialize_rules(rules, argv))
+	if (init_rules(rules, argv))
 		return (EXIT_FAILURE);
 	if (check_input(rules))
-		return (EXIT_FAILURE);
-	if (initialize_philos(rules))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

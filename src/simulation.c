@@ -6,31 +6,60 @@
 /*   By: pieterderksen <pieterderksen@student.co      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 14:01:11 by pieterderks   #+#    #+#                 */
-/*   Updated: 2022/09/06 14:15:42 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/08 16:41:38 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-//Sets the current time in mili seconds
-//tv.sec = time in seconds
-//tv.usec = additional time in micro seconds
-int	get_start_time(t_rules *rules)
+void	create_philosophers(t_philo *s_philo, t_rules *rules, \
+		 pthread_t *philo_thread)
 {
-	struct timeval	t;
+	int	i;
 
-	if (gettimeofday(&t, NULL) == -1)
-		return (ft_error("function: 'gettimeofday' returned an error\n"));
-	rules->time_at_start = (t.tv_sec * 1000) + (t.tv_usec / 1000);
-	return (EXIT_SUCCESS);
+	i = 0;
+	while (i < rules->nb_of_philos)
+	{
+		s_philo[i].rules = rules;
+		s_philo[i].id = i + 1;
+		s_philo[i].times_eaten = 0;
+		s_philo[i].start_time = get_current_time();
+		s_philo[i].left_fork = i;
+		if (rules->nb_of_philos > 1)
+		{
+			if (s_philo[i].id != rules->nb_of_philos)
+				s_philo[i].right_fork = i + 1;
+			else
+				s_philo[i].right_fork = 0;
+		}
+		pthread_mutex_init(&rules->forks[i], NULL);
+		pthread_create(&philo_thread[i], NULL, ft_philosopher, \
+			(void *)&s_philo[i]);
+		i++;
+	}
+}	
+
+void	join_threads(pthread_t *philo_thread, t_rules *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->nb_of_philos)
+	{
+		pthread_join(philo_thread[i], NULL);
+		i++;
+	}
 }
 
 int	start_simulation(t_rules *rules)
 {
-	if (get_start_time(rules))
-		return (EXIT_FAILURE);
-	
+	t_philo		*s_philo;
+	pthread_t	philo_thread[200];
 
-
+	s_philo = malloc(rules->nb_of_philos * sizeof(t_philo));
+	if (!s_philo)
+		return (ft_error("Failed to malloc s_philo struct\n"));
+	create_philosophers(s_philo, rules, philo_thread);
+	join_threads(philo_thread, rules);
 	return (EXIT_SUCCESS);
 }

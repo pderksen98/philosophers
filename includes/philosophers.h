@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/07 13:18:07 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/08 16:42:08 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,8 @@ typedef struct s_rules
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_of_meals;
-	int				index;
 	long			time_at_start;
-	pthread_mutex_t	*forks;
-	struct s_philo	*philos;
-	// pthread_mutex_t	print_lock;
-	// bool			a_philo_died;
-	// bool			all_philo_ate;
+	pthread_mutex_t	forks[200];
 }	t_rules;
 
 typedef struct s_philo
@@ -46,9 +41,8 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				times_eaten;
+	long			start_time;
 	t_rules			*rules;
-	// int				last_meal;
-	// bool			finished;
 }	t_philo;
 
 int		main(int argc, char **argv);
@@ -56,10 +50,13 @@ int		ft_atoi(const char *str);
 void	ft_check_malloc(void *ptr);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_error(char *str);
-int		initialize_all(t_rules *rules, char **argv);
 int		initialize_rules(t_rules *rules, char **argv);
-int		initialize_philos(t_rules *rules);
+int		init_rules(t_rules *rules, char **argv);
 int		check_input(t_rules *rules);
 int		start_simulation(t_rules *rules);
-int		get_start_time(t_rules *rules);
+void	create_philosophers(t_philo *s_philo, t_rules *rules, \
+		pthread_t *philo_thread);
+void	join_threads(pthread_t *philo_thread, t_rules *rules);
+long	get_current_time(void);
+void	*ft_philosopher(void *void_philo);
 #endif

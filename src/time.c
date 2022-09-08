@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   time.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/31 13:15:34 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/08 14:21:18 by pderksen      ########   odam.nl         */
+/*   Created: 2022/09/08 16:33:56 by pderksen      #+#    #+#                 */
+/*   Updated: 2022/09/08 16:34:30 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char **argv)
+long	get_current_time(void)
 {
-	t_rules	rules;
+	struct timeval	t;
+	long			cur_time;
 
-	if (argc < 5 || argc > 6)
-		return (ft_error("Wrong amount of arguments\n"));
-	if (initialize_rules(&rules, argv))
-		return (EXIT_FAILURE);
-	if (start_simulation(&rules))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	gettimeofday(&t, NULL);
+	cur_time = (t.tv_sec * 1000) + (t.tv_usec / 1000);
+	return (cur_time);
 }

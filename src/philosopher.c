@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   philosopher.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/31 13:15:34 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/08 14:21:18 by pderksen      ########   odam.nl         */
+/*   Created: 2022/09/08 16:30:49 by pderksen      #+#    #+#                 */
+/*   Updated: 2022/09/08 16:40:54 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char **argv)
+void	*ft_philosopher(void *void_philo)
 {
-	t_rules	rules;
+	t_philo	*s_philo;
 
-	if (argc < 5 || argc > 6)
-		return (ft_error("Wrong amount of arguments\n"));
-	if (initialize_rules(&rules, argv))
-		return (EXIT_FAILURE);
-	if (start_simulation(&rules))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	s_philo = (t_philo *)void_philo;
+	printf("Philo ID from thread = %d\n", s_philo->id);
+	return (void_philo);
 }
