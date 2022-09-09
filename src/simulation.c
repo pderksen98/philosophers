@@ -6,7 +6,7 @@
 /*   By: pieterderksen <pieterderksen@student.co      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 14:01:11 by pieterderks   #+#    #+#                 */
-/*   Updated: 2022/09/08 16:41:38 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/09 13:48:58 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	create_philosophers(t_philo *s_philo, t_rules *rules, \
 	i = 0;
 	while (i < rules->nb_of_philos)
 	{
+		rules->fork_available[i] = 0;
 		s_philo[i].rules = rules;
 		s_philo[i].id = i + 1;
 		s_philo[i].times_eaten = 0;
@@ -54,12 +55,13 @@ void	join_threads(pthread_t *philo_thread, t_rules *rules)
 int	start_simulation(t_rules *rules)
 {
 	t_philo		*s_philo;
-	pthread_t	philo_thread[200];
+	pthread_t	philo_thread[rules->nb_of_philos]; //evt + 1
 
 	s_philo = malloc(rules->nb_of_philos * sizeof(t_philo));
 	if (!s_philo)
 		return (ft_error("Failed to malloc s_philo struct\n"));
 	create_philosophers(s_philo, rules, philo_thread);
 	join_threads(philo_thread, rules);
+	free(s_philo);
 	return (EXIT_SUCCESS);
 }

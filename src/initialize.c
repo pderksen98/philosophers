@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/01 12:56:53 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/08 16:38:06 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/09 14:25:19 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,17 @@ int	init_rules(t_rules *rules, char **argv)
 	return (EXIT_SUCCESS);
 }
 
+void	init_mutexes(t_rules *rules)
+{
+	pthread_mutex_init(&rules->print_lock, NULL);
+}
+
 int	initialize_rules(t_rules *rules, char **argv)
 {
 	if (init_rules(rules, argv))
 		return (EXIT_FAILURE);
 	if (check_input(rules))
 		return (EXIT_FAILURE);
+	init_mutexes(rules);
 	return (EXIT_SUCCESS);
 }

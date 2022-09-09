@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/08 16:42:08 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/09 14:23:16 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef struct s_rules
 	int				time_to_sleep;
 	int				nb_of_meals;
 	long			time_at_start;
+	int				fork_available[200];
 	pthread_mutex_t	forks[200];
+	pthread_mutex_t	print_lock;
 }	t_rules;
 
 typedef struct s_philo
