@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/09 14:23:16 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/14 16:27:04 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <sys/time.h>
 # include "philosophers.h"
 
+typedef struct s_mutex {
+	int				on;
+	pthread_mutex_t	fork;
+	pthread_mutex_t	wait;
+}	t_mutex;
+
 typedef struct s_rules
 {
 	int				nb_of_philos;
@@ -32,8 +38,8 @@ typedef struct s_rules
 	int				time_to_sleep;
 	int				nb_of_meals;
 	long			time_at_start;
-	int				fork_available[200];
 	pthread_mutex_t	forks[200];
+	//t_mutex		forks[200];
 	pthread_mutex_t	print_lock;
 }	t_rules;
 
@@ -43,7 +49,7 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				times_eaten;
-	long			start_time;
+	long			last_meal;
 	t_rules			*rules;
 }	t_philo;
 
@@ -61,4 +67,14 @@ void	create_philosophers(t_philo *s_philo, t_rules *rules, \
 void	join_threads(pthread_t *philo_thread, t_rules *rules);
 long	get_current_time(void);
 void	*ft_philosopher(void *void_philo);
+
+
+void	eating(t_philo *s_philo);
+void	pick_up_forks(t_philo *s_philo);
+void	sleeping(t_philo *s_philo);
+void	thinking(t_philo *s_philo);
+void	put_down_forks(t_philo *s_philo);
+void	printing(char *str, long time, t_philo *s_philo);
+
+long	time_dif(long current_time, t_philo *s_philo);
 #endif
