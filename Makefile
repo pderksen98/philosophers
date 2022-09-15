@@ -6,7 +6,7 @@
 #    By: pderksen <pderksen@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/08/22 14:33:13 by pderksen      #+#    #+#                  #
-#    Updated: 2022/09/14 16:23:34 by pderksen      ########   odam.nl          #
+#    Updated: 2022/09/15 14:42:32 by pderksen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,8 @@ SRCS := main.c \
 		atoi.c \
 		initialize.c \
 		simulation.c \
-		philosopher.c \
-		time.c \
-		mutex.c
+		routine.c \
+		time.c
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 

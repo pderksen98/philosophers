@@ -6,11 +6,18 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/31 13:15:34 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/08 14:21:18 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/15 17:04:51 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+
+//TO DO
+// - number of times to eat
+// - protect all mutex_init and thread_create
+// - check when only 1 philo
+//
 
 int	main(int argc, char **argv)
 {
