@@ -6,7 +6,7 @@
 /*   By: pieterderksen <pieterderksen@student.co      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 14:01:11 by pieterderks   #+#    #+#                 */
-/*   Updated: 2022/09/15 15:20:34 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/19 16:28:59 by pieterderks   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	create_philosophers(t_philo *s_philo, t_rules *rules, \
 	i = 0;
 	while (i < rules->nb_of_philos)
 	{
-		rules->fork_available[i] = 0;
+		rules->fork_available[i] = 0; //previous write of size 4 at 'address' by main thread
 		s_philo[i].rules = rules;
 		s_philo[i].id = i + 1;
 		s_philo[i].times_eaten = 0;
@@ -39,7 +39,7 @@ void	create_philosophers(t_philo *s_philo, t_rules *rules, \
 			(void *)&s_philo[i]);
 		i++;
 	}
-}	
+}
 
 void	join_threads(pthread_t *philo_thread, t_rules *rules)
 {

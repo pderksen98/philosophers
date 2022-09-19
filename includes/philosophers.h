@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/15 17:14:03 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/19 17:28:30 by pieterderks   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdbool.h>
 # include <sys/time.h>
 # include "philosophers.h"
+
 
 typedef struct s_rules
 {
@@ -68,6 +69,7 @@ void	put_down_forks(t_philo *s_philo, int left, int right);
 void	eating(t_philo *s_philo);
 int		pick_up_fork(t_philo *s_philo, int x);
 void	try_to_eat(t_philo *s_philo);
+int		check_times_eaten(t_philo *s_philo);
 void	*ft_philosopher(void *void_philo);
 //simulation.c
 void	create_philosophers(t_philo *s_philo, t_rules *rules, pthread_t *philo_thread);

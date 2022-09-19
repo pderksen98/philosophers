@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/01 12:56:53 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/15 17:14:34 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/19 17:27:02 by pieterderks   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	init_rules(t_rules *rules, char **argv)
 	if (argv[5])
 	{
 		rules->nb_of_meals = ft_atoi(argv[5]);
-		if (rules->nb_of_meals < 0)
+		if (rules->nb_of_meals < 1)
 			return (ft_error("Number of times a philospher eats must be" \
-					 "positive if it is given\n"));
+					 " larger than 0 if it is given\n"));
 	}
 	else
 		rules->nb_of_meals = -1;
