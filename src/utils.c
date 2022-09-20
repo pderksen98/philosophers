@@ -6,12 +6,13 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/31 13:15:25 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/01 14:14:49 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:42:49 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+//writes string 's' to file descriptor 'fd'
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
@@ -26,12 +27,7 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-void	ft_check_malloc(void *ptr)
-{
-	if (!ptr)
-		exit(1);
-}
-
+//function that prints error message and returns (1)
 int	ft_error(char *str)
 {
 	if (str)

@@ -6,12 +6,15 @@
 /*   By: pieterderksen <pieterderksen@student.co      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 14:01:11 by pieterderks   #+#    #+#                 */
-/*   Updated: 2022/09/20 12:07:14 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:45:13 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+//funcion to create all the threads
+//each thread(philo) gets the struct of the correct philosopher
+//and each thread goes in to the ft_routine function to start
 void	create_threads(t_philo *s_philo, t_rules *rules, \
 			pthread_t *philo_thread)
 {
@@ -20,12 +23,15 @@ void	create_threads(t_philo *s_philo, t_rules *rules, \
 	i = 0;
 	while (i < rules->nb_of_philos)
 	{
-		pthread_create(&philo_thread[i], NULL, ft_philosopher, \
+		pthread_create(&philo_thread[i], NULL, ft_routine, \
 			(void *)&s_philo[i]);
 		i++;
 	}
 }
 
+//function to set all the variables for each philosopher
+//because philo's are dining at a round table:
+//the right fork of last philo is same as left fork of first philo
 void	create_philosophers(t_philo *s_philo, t_rules *rules)
 {
 	int	i;
@@ -50,6 +56,7 @@ void	create_philosophers(t_philo *s_philo, t_rules *rules)
 	}
 }
 
+//function to join all the threads used when simulation is done
 void	join_threads(pthread_t *philo_thread, t_rules *rules)
 {
 	int	i;
@@ -62,10 +69,15 @@ void	join_threads(pthread_t *philo_thread, t_rules *rules)
 	}
 }
 
+//mallocs all the t_philo structs necessary
+//calls create_philosophers function
+//calls create_threads function
+//calls join_threads function
+//frees the t_philo malloc
 int	start_simulation(t_rules *rules)
 {
 	t_philo		*s_philo;
-	pthread_t	philo_thread[rules->nb_of_philos];
+	pthread_t	philo_thread[200];
 
 	s_philo = malloc(rules->nb_of_philos * sizeof(t_philo));
 	if (!s_philo)

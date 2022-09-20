@@ -6,23 +6,26 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/08 16:33:56 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/20 12:07:52 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:45:23 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+//hard code when only one philosopher
 void	eating_single_philo(t_philo *s_philo)
 {
 	long	pick_fork;
 
-	printing("At %ld:	philo %d has picked up a fork\n", s_philo);
+	printing("%ld:	philo %d has picked up a fork\n", s_philo);
 	pick_fork = get_current_time();
 	while (get_current_time() < (pick_fork + s_philo->rules->time_to_die))
 		usleep(250);
-	printing("At %ld:	philo %d has died\n", s_philo);
+	printing("%ld:	philo %d has died\n", s_philo);
 }
 
+//function in order to print the messages
+//cur_time is the current time, sim_time is cur_time - time sim started
 void	printing(char *str, t_philo *s_philo)
 {
 	long	cur_time;
@@ -38,6 +41,9 @@ void	printing(char *str, t_philo *s_philo)
 	pthread_mutex_unlock(&s_philo->rules->print_lock);
 }
 
+//function to get the current time in mili seconds
+//this by multiplying time in seconds by 1000 and
+//... adding the addidional microseconds devided by 1000
 long	get_current_time(void)
 {
 	struct timeval	t;

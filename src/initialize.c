@@ -6,12 +6,14 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/01 12:56:53 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/20 11:54:37 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:43:18 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+//checks if the input is correct
+//if not it gives an error message and (1) is returned
 int	check_input(t_rules *rules)
 {
 	if (rules->nb_of_philos < 1)
@@ -27,6 +29,10 @@ int	check_input(t_rules *rules)
 	return (EXIT_SUCCESS);
 }
 
+//sets the input arguments in the 'rules' struct
+//if no_of_meals is given it will set the variable accordingly
+//if this value is not correct function returns (1)
+//if the argument is not provided the value is set to (-1)
 int	init_rules(t_rules *rules, char **argv)
 {
 	rules->time_at_start = get_current_time();
@@ -47,28 +53,46 @@ int	init_rules(t_rules *rules, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-//PROTECT
-void	init_mutexes(t_rules *rules)
+//function that initializes all the necessary mutexes
+//if an error occurs during the initizalization (1) is returned
+int	init_mutexes(t_rules *rules)
 {
 	int	i;
 
+	if (pthread_mutex_init(&rules->print_lock, NULL))
+		return (EXIT_FAILURE);
+	if (pthread_mutex_init(&rules->philo_died, NULL))
+	{
+		pthread_mutex_destroy(&rules->print_lock);
+		return (EXIT_FAILURE);
+	}
 	i = 0;
 	while (i < rules->nb_of_philos)
 	{
-		pthread_mutex_init(&rules->forks[i], NULL);
-		pthread_mutex_init(&rules->wait[i], NULL);
+		if (pthread_mutex_init(&rules->forks[i], NULL))
+		{
+			destroy_mutex_error(rules, i, 1);
+			return (EXIT_FAILURE);
+		}
+		if (pthread_mutex_init(&rules->wait[i], NULL))
+		{
+			destroy_mutex_error(rules, i, 2);
+			return (EXIT_FAILURE);
+		}
 		i++;
 	}
-	pthread_mutex_init(&rules->print_lock, NULL);
-	pthread_mutex_init(&rules->philo_died, NULL);
+	return (EXIT_SUCCESS);
 }
 
+//Calls all the initialize functions
+//If an error occured of the init functions (1) returned
 int	initialize_rules(t_rules *rules, char **argv)
 {
 	if (init_rules(rules, argv))
 		return (EXIT_FAILURE);
 	if (check_input(rules))
 		return (EXIT_FAILURE);
-	init_mutexes(rules);
+	if (init_mutexes(rules))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

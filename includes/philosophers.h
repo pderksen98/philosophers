@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/20 12:05:55 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:41:59 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,13 @@ typedef struct s_philo
 
 //atoi.c
 int		ft_atoi(const char *str);
+//destroy_mutexes.c
+int		destroy_mutexes(t_rules *rules);
+void	destroy_mutex_error(t_rules *rules, int x, int flag);
 //initialize.c
 int		check_input(t_rules *rules);
 int		init_rules(t_rules *rules, char **argv);
-void	init_mutexes(t_rules *rules);
+int		init_mutexes(t_rules *rules);
 int		initialize_rules(t_rules *rules, char **argv);
 //main.c
 int		main(int argc, char **argv);
@@ -64,7 +67,7 @@ void	sleeping(t_philo *s_philo);
 void	eating(t_philo *s_philo);
 int		check_times_eaten(t_philo *s_philo);
 void	try_to_eat(t_philo *s_philo);
-void	*ft_philosopher(void *void_philo);
+void	*ft_routine(void *void_philo);
 //forks.c
 int		check_if_philo_died(t_philo *s_philo);
 int		check_if_death(t_philo *s_philo);
@@ -83,6 +86,5 @@ void	printing(char *str, t_philo *s_philo);
 long	get_current_time(void);
 //utils.c
 void	ft_putstr_fd(char *s, int fd);
-void	ft_check_malloc(void *ptr);
 int		ft_error(char *str);
 #endif

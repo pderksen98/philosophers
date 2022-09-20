@@ -6,7 +6,7 @@
 #    By: pderksen <pderksen@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/08/22 14:33:13 by pderksen      #+#    #+#                  #
-#    Updated: 2022/09/20 12:04:00 by pderksen      ########   odam.nl          #
+#    Updated: 2022/09/20 15:47:27 by pderksen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ CC := gcc
 CFLAGS := -Wall -Wextra -Werror
 else
 CC := clang
-CFLAGS := -Wall -Wextra -Werror -fsanitize=thread -g3 -DDEBUG=1
+CFLAGS := -Wall -Wextra -Werror -fsanitize=address -g3 -DDEBUG=1
 endif
 
 #Source and object files
@@ -42,9 +42,9 @@ SRCS := main.c \
 		simulation.c \
 		routine.c \
 		time.c \
-		forks.c
+		forks.c \
+		destroy_mutexes.c
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
-
 
 all: $(NAME)
 
