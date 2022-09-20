@@ -6,21 +6,34 @@
 /*   By: pieterderksen <pieterderksen@student.co      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 14:01:11 by pieterderks   #+#    #+#                 */
-/*   Updated: 2022/09/19 16:28:59 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/20 12:07:14 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	create_philosophers(t_philo *s_philo, t_rules *rules, \
-		 pthread_t *philo_thread)
+void	create_threads(t_philo *s_philo, t_rules *rules, \
+			pthread_t *philo_thread)
 {
 	int	i;
 
 	i = 0;
 	while (i < rules->nb_of_philos)
 	{
-		rules->fork_available[i] = 0; //previous write of size 4 at 'address' by main thread
+		pthread_create(&philo_thread[i], NULL, ft_philosopher, \
+			(void *)&s_philo[i]);
+		i++;
+	}
+}
+
+void	create_philosophers(t_philo *s_philo, t_rules *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->nb_of_philos)
+	{
+		rules->fork_available[i] = 0;
 		s_philo[i].rules = rules;
 		s_philo[i].id = i + 1;
 		s_philo[i].times_eaten = 0;
@@ -33,10 +46,6 @@ void	create_philosophers(t_philo *s_philo, t_rules *rules, \
 			else
 				s_philo[i].right_fork = 0;
 		}
-		pthread_mutex_init(&rules->forks[i], NULL); //ADD PROTECTION -> DESTROY FUNCTION
-		pthread_mutex_init(&rules->wait[i], NULL); //ADD PROTECTION -> DESTROY FUNCTION
-		pthread_create(&philo_thread[i], NULL, ft_philosopher, \
-			(void *)&s_philo[i]);
 		i++;
 	}
 }
@@ -61,7 +70,8 @@ int	start_simulation(t_rules *rules)
 	s_philo = malloc(rules->nb_of_philos * sizeof(t_philo));
 	if (!s_philo)
 		return (ft_error("Failed to malloc s_philo struct\n"));
-	create_philosophers(s_philo, rules, philo_thread);
+	create_philosophers(s_philo, rules);
+	create_threads(s_philo, rules, philo_thread);
 	join_threads(philo_thread, rules);
 	free(s_philo);
 	return (EXIT_SUCCESS);

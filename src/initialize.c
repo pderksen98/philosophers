@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/01 12:56:53 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/19 17:27:02 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/20 11:54:37 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,18 @@ int	init_rules(t_rules *rules, char **argv)
 	return (EXIT_SUCCESS);
 }
 
+//PROTECT
 void	init_mutexes(t_rules *rules)
 {
+	int	i;
+
+	i = 0;
+	while (i < rules->nb_of_philos)
+	{
+		pthread_mutex_init(&rules->forks[i], NULL);
+		pthread_mutex_init(&rules->wait[i], NULL);
+		i++;
+	}
 	pthread_mutex_init(&rules->print_lock, NULL);
 	pthread_mutex_init(&rules->philo_died, NULL);
 }

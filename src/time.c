@@ -6,11 +6,22 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/08 16:33:56 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/19 16:54:45 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/20 12:07:52 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	eating_single_philo(t_philo *s_philo)
+{
+	long	pick_fork;
+
+	printing("At %ld:	philo %d has picked up a fork\n", s_philo);
+	pick_fork = get_current_time();
+	while (get_current_time() < (pick_fork + s_philo->rules->time_to_die))
+		usleep(250);
+	printing("At %ld:	philo %d has died\n", s_philo);
+}
 
 void	printing(char *str, t_philo *s_philo)
 {

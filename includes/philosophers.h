@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/19 17:28:30 by pieterderks   ########   odam.nl         */
+/*   Updated: 2022/09/20 12:05:55 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <stdbool.h>
 # include <sys/time.h>
 # include "philosophers.h"
-
 
 typedef struct s_rules
 {
@@ -59,27 +58,31 @@ int		init_rules(t_rules *rules, char **argv);
 void	init_mutexes(t_rules *rules);
 int		initialize_rules(t_rules *rules, char **argv);
 //main.c
-int	main(int argc, char **argv);
+int		main(int argc, char **argv);
 //routine.c
-int		check_if_philo_died(t_philo *s_philo);
-void	set_philo_dead(t_philo *s_philo);
-int		check_if_death(t_philo *s_philo);
 void	sleeping(t_philo *s_philo);
-void	put_down_forks(t_philo *s_philo, int left, int right);
 void	eating(t_philo *s_philo);
-int		pick_up_fork(t_philo *s_philo, int x);
-void	try_to_eat(t_philo *s_philo);
 int		check_times_eaten(t_philo *s_philo);
+void	try_to_eat(t_philo *s_philo);
 void	*ft_philosopher(void *void_philo);
+//forks.c
+int		check_if_philo_died(t_philo *s_philo);
+int		check_if_death(t_philo *s_philo);
+void	set_philo_dead(t_philo *s_philo);
+void	put_down_forks(t_philo *s_philo, int left, int right);
+int		pick_up_fork(t_philo *s_philo, int x);
 //simulation.c
-void	create_philosophers(t_philo *s_philo, t_rules *rules, pthread_t *philo_thread);
+void	create_threads(t_philo *s_philo, t_rules *rules, \
+			pthread_t *philo_thread);
+void	create_philosophers(t_philo *s_philo, t_rules *rules);
 void	join_threads(pthread_t *philo_thread, t_rules *rules);
 int		start_simulation(t_rules *rules);
 //time.c
+void	eating_single_philo(t_philo *s_philo);
 void	printing(char *str, t_philo *s_philo);
 long	get_current_time(void);
 //utils.c
-int		ft_error(char *str);
-void	ft_check_malloc(void *ptr);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_check_malloc(void *ptr);
+int		ft_error(char *str);
 #endif
