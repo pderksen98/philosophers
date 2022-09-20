@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 14:41:10 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/20 15:41:59 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 16:44:29 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ void	set_philo_dead(t_philo *s_philo);
 void	put_down_forks(t_philo *s_philo, int left, int right);
 int		pick_up_fork(t_philo *s_philo, int x);
 //simulation.c
-void	create_threads(t_philo *s_philo, t_rules *rules, \
+int		create_threads(t_philo *s_philo, t_rules *rules, \
 			pthread_t *philo_thread);
 void	create_philosophers(t_philo *s_philo, t_rules *rules);
+void	join_treads_error(pthread_t *philo_thread, int x);
 void	join_threads(pthread_t *philo_thread, t_rules *rules);
 int		start_simulation(t_rules *rules);
 //time.c

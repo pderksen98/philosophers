@@ -6,7 +6,7 @@
 /*   By: pieterderksen <pieterderksen@student.co      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 14:01:11 by pieterderks   #+#    #+#                 */
-/*   Updated: 2022/09/20 15:45:13 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 16:46:31 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //funcion to create all the threads
 //each thread(philo) gets the struct of the correct philosopher
 //and each thread goes in to the ft_routine function to start
-void	create_threads(t_philo *s_philo, t_rules *rules, \
+int	create_threads(t_philo *s_philo, t_rules *rules, \
 			pthread_t *philo_thread)
 {
 	int	i;
@@ -23,10 +23,15 @@ void	create_threads(t_philo *s_philo, t_rules *rules, \
 	i = 0;
 	while (i < rules->nb_of_philos)
 	{
-		pthread_create(&philo_thread[i], NULL, ft_routine, \
-			(void *)&s_philo[i]);
+		if (pthread_create(&philo_thread[i], NULL, ft_routine, \
+			(void *)&s_philo[i]))
+		{
+			join_treads_error(philo_thread, i);
+			return (EXIT_FAILURE);
+		}
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 //function to set all the variables for each philosopher
@@ -52,6 +57,19 @@ void	create_philosophers(t_philo *s_philo, t_rules *rules)
 			else
 				s_philo[i].right_fork = 0;
 		}
+		i++;
+	}
+}
+
+//joins the already made threads in case one fail to create
+void	join_treads_error(pthread_t *philo_thread, int x)
+{
+	int	i;
+
+	i = 0;
+	while (i < x)
+	{
+		pthread_join(philo_thread[i], NULL);
 		i++;
 	}
 }
@@ -83,7 +101,8 @@ int	start_simulation(t_rules *rules)
 	if (!s_philo)
 		return (ft_error("Failed to malloc s_philo struct\n"));
 	create_philosophers(s_philo, rules);
-	create_threads(s_philo, rules, philo_thread);
+	if (create_threads(s_philo, rules, philo_thread))
+		return (EXIT_FAILURE);
 	join_threads(philo_thread, rules);
 	free(s_philo);
 	return (EXIT_SUCCESS);

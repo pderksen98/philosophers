@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/08 16:30:49 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/20 15:45:00 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 17:05:20 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,12 @@ void	*ft_routine(void *void_philo)
 	s_philo = (t_philo *)void_philo;
 	if (s_philo->rules->nb_of_philos != 1)
 	{
-		if (s_philo->id % 2)
+		if (s_philo->rules->time_to_die < s_philo->rules->time_to_eat)
+		{
+			if (s_philo->id % 2)
+				usleep(250);
+		}
+		else if (s_philo->id % 2)
 			usleep((s_philo->rules->time_to_eat * 1000) / 2);
 		try_to_eat(s_philo);
 	}

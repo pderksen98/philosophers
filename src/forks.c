@@ -6,7 +6,7 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 11:49:43 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/20 15:44:15 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/20 16:58:06 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_if_death(t_philo *s_philo)
 	cur_time = get_current_time();
 	if (check_if_philo_died(s_philo))
 		return (1);
-	else if ((cur_time - s_philo->last_meal) > s_philo->rules->time_to_die)
+	else if ((cur_time - s_philo->last_meal) > (s_philo->rules->time_to_die))
 	{
 		printing("%ld:	philo %d has died\n", s_philo);
 		pthread_mutex_unlock(&s_philo->rules->forks[s_philo->left_fork]);
