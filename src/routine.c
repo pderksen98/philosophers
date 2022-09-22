@@ -6,14 +6,15 @@
 /*   By: pderksen <pderksen@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/08 16:30:49 by pderksen      #+#    #+#                 */
-/*   Updated: 2022/09/20 17:05:20 by pderksen      ########   odam.nl         */
+/*   Updated: 2022/09/21 12:09:31 by pderksen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 //function to sleep for the correct 'time_to_sleep' time
-//when done philo is thinking and imidately will try to eat
+//while sleeping it checks if the philosopher should die
+//when done: philo goes thinking and imidately will try to eat
 //... again by calling the try to eat function
 void	sleeping(t_philo *s_philo)
 {
@@ -22,23 +23,25 @@ void	sleeping(t_philo *s_philo)
 	start_sleep = get_current_time();
 	printing("%ld:	philo %d is sleeping\n", s_philo);
 	while (get_current_time() < (start_sleep + s_philo->rules->time_to_sleep))
+	{
+		if (check_if_death(s_philo))
+			return ;
 		usleep(500);
+	}
 	printing("%ld:	philo %d is thinking\n", s_philo);
 	try_to_eat(s_philo);
 }
 
 //function to 'hold' both forks for correct 'time_to_eat' time
-//when done it will set the 'last_meal' variable and calls the 
+//when start it will set the 'last_meal' variable and calls the 
 //... put_down_forks function
 void	eating(t_philo *s_philo)
 {
-	long	start_eat;
-
-	start_eat = get_current_time();
-	printing("%ld:	philo %d is eating\n", s_philo);
-	while (get_current_time() < (start_eat + s_philo->rules->time_to_eat))
-		usleep(250);
 	s_philo->last_meal = get_current_time();
+	printing("%ld:	philo %d is eating\n", s_philo);
+	while (get_current_time() < (s_philo->last_meal + \
+			s_philo->rules->time_to_eat))
+		usleep(250);
 	s_philo->times_eaten += 1;
 	put_down_forks(s_philo, s_philo->left_fork, s_philo->right_fork);
 }
@@ -91,6 +94,7 @@ void	*ft_routine(void *void_philo)
 	t_philo	*s_philo;
 
 	s_philo = (t_philo *)void_philo;
+	printing("%ld:	philo %d is thinking\n", s_philo);
 	if (s_philo->rules->nb_of_philos != 1)
 	{
 		if (s_philo->rules->time_to_die < s_philo->rules->time_to_eat)
